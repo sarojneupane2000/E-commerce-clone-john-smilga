@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { IoStar, IoStarOutline } from 'react-icons/io5';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import { products } from './product';
+import { CartContext } from './CartContext'; // Importing CartContext directly
 
-const ProductDetails = ({ AddToCart }) => {
+const ProductDetails = () => {
     const { id } = useParams();
     const product = products.find(item => item.id === parseInt(id));
     const [quantity, setQuantity] = useState(1);
-    
+    const { addToCart } = useContext(CartContext); // Accessing addToCart function from CartContext
 
     const increase = () => {
         setQuantity(prevQuantity => prevQuantity + 1);
@@ -19,7 +20,7 @@ const ProductDetails = ({ AddToCart }) => {
     };
 
     const handleAddToCart = () => {
-        AddToCart({ ...product, quantity }); // Call addToCart function with product and quantity
+        addToCart({ ...product, quantity }); // Call addToCart function with product and quantity
         alert(`${product.name} added to cart!`);
     };
 

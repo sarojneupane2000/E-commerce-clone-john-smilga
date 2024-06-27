@@ -1,9 +1,11 @@
-// Header.js
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { CartContext } from './CartContext'; // Importing CartContext directly
 
 const Header = () => {
+    const { cartItems } = useContext(CartContext); // Accessing cartItems from CartContext
     const location = useLocation();
+
     const getPathName = () => {
         switch(location.pathname) {
             case '/':
@@ -12,6 +14,8 @@ const Header = () => {
                 return 'HOME / ABOUT';
             case '/products':
                 return 'HOME / PRODUCTS';
+            case '/cart':
+                return 'HOME / CART';
             default:
                 return 'HOME';
         }
@@ -29,16 +33,14 @@ const Header = () => {
                 <div className='flex gap-5 text-2xl items-center relative'>
                     <div className='relative'>
                         <p className='flex items-center'>
-                            Cart <i className="bi bi-cart-plus-fill"></i>
-                            <span className='absolute -top-2 -right-2 text-sm bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center'>0</span>
+                           <Link to="/cart">Cart</Link>  <i className="bi bi-cart-plus-fill"></i>
+                            <span className='absolute -top-2 -right-2 text-sm bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center'>{cartItems.length}</span>
                         </p>
                     </div>
-                    <p>Login <i className="bi bi-person-fill-add"></i></p>
+                    <p> <Link to="/login">Login</Link>  <i className="bi bi-person-fill-add"></i></p>
                 </div>
             </div>
-            <div className='bg-orange-200 p-6'>
-                <h1 className='font-bold text-3xl mx-16 my-20 text-gray-400'>{getPathName()}</h1>
-            </div>
+           
         </div>
     );
 }
